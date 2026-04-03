@@ -7,8 +7,10 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.101.1",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^17.2.3",
     "express": "^4.21.2",
-    "nedb-promises": "^6.2.3"
+    "mongodb": "^7.1.1"
   }
 }
