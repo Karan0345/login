@@ -60,7 +60,11 @@ app.post("/api/verification", async (req, res) => {
     if (error.errorType === "uniqueViolated") {
       return res.status(409).json({ message: "This mobile number is already verified." });
     }
-    return res.status(500).json({ message: "Unable to process verification." });
+    return res.status(500).json({
+      message: "Unable to process verification.",
+      detail: String(error?.message || error),
+      config: db.diagnostics || null
+    });
   }
 });
 
@@ -94,7 +98,11 @@ app.post("/api/login", async (req, res) => {
     });
   } catch (error) {
     console.error("Login failed:", error);
-    return res.status(500).json({ message: "Login failed. Please try again." });
+    return res.status(500).json({
+      message: "Login failed. Please try again.",
+      detail: String(error?.message || error),
+      config: db.diagnostics || null
+    });
   }
 });
 
