@@ -41,18 +41,28 @@ const normalizeRow = (row) => {
   };
 };
 
+function isUniqueViolation(error) {
+  const code = String(error?.code ?? "");
+  const msg = String(error?.message ?? "");
+  return code === "23505" || /duplicate key|unique constraint/i.test(msg);
+}
+
 const users = {
   async insert(payload) {
-    const { data, error } = await supabase.from("users").insert(payload).select().single();
+    const { data, error } = await supabase.from("users").insert(payload).select("*");
     if (error) {
-      if (error.code === "23505") {
+      if (isUniqueViolation(error)) {
         const duplicateError = new Error(error.message);
         duplicateError.errorType = "uniqueViolated";
         throw duplicateError;
       }
       throw error;
     }
-    return normalizeRow(data);
+    const row = Array.isArray(data) ? data[0] : data;
+    if (!row) {
+      throw new Error("Insert returned no row (check RLS policies or table name).");
+    }
+    return normalizeRow(row);
   },
   async findOne(query) {
     const queryEntries = Object.entries(query || {});
@@ -68,10 +78,43 @@ const users = {
 
 const loginAttempts = {
   async insert(payload) {
-    const { data, error } = await supabase.from("login_attempts").insert(payload).select().single();
+    const { data, error } = await supabase.from("login_attempts").insert(payload).select("*");
     if (error) throw error;
-    return normalizeRow(data);
+    const row = Array.isArray(data) ? data[0] : data;
+    if (!row) {
+      throw new Error("Insert returned no row (check RLS policies or table name).");
+    }
+    return normalizeRow(row);
   }
 };
 
-module.exports = { users, loginAttempts, diagnostics: { keyRole, hasUrl: Boolean(supabaseUrl) } };
+async function healthCheck() {
+  const { error } = await supabase.from("users").select("id").limit(1);
+  if (error) throw error;
+}
+
+function formatSupabaseError(error) {
+  if (!error) return "Unknown error";
+  if (typeof error === "string") return error;
+  if (error instanceof Error && error.message) return error.message;
+  const parts = [
+    error.message,
+    error.code ? `code=${error.code}` : null,
+    error.details,
+    error.hint ? `hint=${error.hint}` : null
+  ].filter(Boolean);
+  if (parts.length) return parts.join(" | ");
+  try {
+    return JSON.stringify(error);
+  } catch (_e) {
+    return String(error);
+  }
+}
+
+module.exports = {
+  users,
+  loginAttempts,
+  healthCheck,
+  diagnostics: { keyRole, hasUrl: Boolean(supabaseUrl) },
+  formatSupabaseError
+};

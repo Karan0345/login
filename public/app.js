@@ -46,7 +46,9 @@ if (verificationForm) {
         body: JSON.stringify(payload)
       });
       const data = await res.json().catch(() => ({}));
-      const msg = data.message || (res.ok ? "Done." : `Request failed (${res.status}).`);
+      const msg = res.ok
+        ? data.message || "Done."
+        : [data.message, data.detail].filter(Boolean).join(" — ") || `Request failed (${res.status}).`;
       showMessage("verificationStatus", msg, res.ok);
       if (res.ok) {
         verificationForm.reset();
@@ -77,7 +79,9 @@ if (loginForm) {
         body: JSON.stringify(payload)
       });
       const data = await res.json().catch(() => ({}));
-      const msg = data.message || (res.ok ? "Done." : `Request failed (${res.status}).`);
+      const msg = res.ok
+        ? data.message || "Done."
+        : [data.message, data.detail].filter(Boolean).join(" — ") || `Request failed (${res.status}).`;
       showMessage("loginStatus", msg, res.ok);
       if (res.ok) {
         loginForm.reset();

@@ -60,9 +60,10 @@ app.post("/api/verification", async (req, res) => {
     if (error.errorType === "uniqueViolated") {
       return res.status(409).json({ message: "This mobile number is already verified." });
     }
+    const detail = db.formatSupabaseError ? db.formatSupabaseError(error) : String(error?.message || error);
     return res.status(500).json({
       message: "Unable to process verification.",
-      detail: String(error?.message || error),
+      detail,
       config: db.diagnostics || null
     });
   }
@@ -98,9 +99,10 @@ app.post("/api/login", async (req, res) => {
     });
   } catch (error) {
     console.error("Login failed:", error);
+    const detail = db.formatSupabaseError ? db.formatSupabaseError(error) : String(error?.message || error);
     return res.status(500).json({
       message: "Login failed. Please try again.",
-      detail: String(error?.message || error),
+      detail,
       config: db.diagnostics || null
     });
   }
@@ -112,7 +114,7 @@ app.get("/", (_req, res) => {
 
 app.get("/api/health", async (_req, res) => {
   try {
-    await db.users.findOne({ mobile: "__health_check_no_user__" });
+    await db.healthCheck();
     return res.json({
       ok: true,
       supabase: "reachable",
@@ -120,26 +122,31 @@ app.get("/api/health", async (_req, res) => {
     });
   } catch (error) {
     console.error("Health check failed:", error);
+    const detail = db.formatSupabaseError ? db.formatSupabaseError(error) : String(error?.message || error);
     return res.status(500).json({
       ok: false,
       message: "Supabase check failed",
-      detail: String(error?.message || error),
+      detail,
       config: db.diagnostics || null
     });
   }
 });
 
-const server = app.listen(PORT, HOST, () => {
-  console.log(`Spro Deal app running at http://${HOST}:${PORT}`);
-});
+module.exports = app;
 
-server.on("error", (error) => {
-  if (error.code === "EADDRINUSE") {
-    console.error(
-      `Port ${PORT} is already in use. Stop the running server or start with another port, for example: PORT=3001 npm start`
-    );
+if (require.main === module) {
+  const server = app.listen(PORT, HOST, () => {
+    console.log(`Spro Deal app running at http://${HOST}:${PORT}`);
+  });
+
+  server.on("error", (error) => {
+    if (error.code === "EADDRINUSE") {
+      console.error(
+        `Port ${PORT} is already in use. Stop the running server or start with another port, for example: PORT=3001 npm start`
+      );
+      process.exit(1);
+    }
+    console.error("Server failed to start:", error);
     process.exit(1);
-  }
-  console.error("Server failed to start:", error);
-  process.exit(1);
-});
+  });
+}
