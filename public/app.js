@@ -1,3 +1,10 @@
+const apiBase = typeof window.__API_BASE__ === "string" ? window.__API_BASE__.replace(/\/$/, "") : "";
+
+function apiUrl(path) {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return `${apiBase}${p}`;
+}
+
 function showMessage(elementId, message, ok) {
   const el = document.getElementById(elementId);
   if (!el) return;
@@ -33,18 +40,23 @@ if (verificationForm) {
     };
 
     try {
-      const res = await fetch("/api/verification", {
+      const res = await fetch(apiUrl("/api/verification"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
-      const data = await res.json();
-      showMessage("verificationStatus", data.message, res.ok);
+      const data = await res.json().catch(() => ({}));
+      const msg = data.message || (res.ok ? "Done." : `Request failed (${res.status}).`);
+      showMessage("verificationStatus", msg, res.ok);
       if (res.ok) {
         verificationForm.reset();
       }
     } catch (_err) {
-      showMessage("verificationStatus", "Server error. Please try again.", false);
+      showMessage(
+        "verificationStatus",
+        "Network error — check API URL (public/config.js) if site and backend are on different hosts.",
+        false
+      );
     }
   });
 }
@@ -59,18 +71,23 @@ if (loginForm) {
     };
 
     try {
-      const res = await fetch("/api/login", {
+      const res = await fetch(apiUrl("/api/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
-      const data = await res.json();
-      showMessage("loginStatus", data.message, res.ok);
+      const data = await res.json().catch(() => ({}));
+      const msg = data.message || (res.ok ? "Done." : `Request failed (${res.status}).`);
+      showMessage("loginStatus", msg, res.ok);
       if (res.ok) {
         loginForm.reset();
       }
     } catch (_err) {
-      showMessage("loginStatus", "Server error. Please try again.", false);
+      showMessage(
+        "loginStatus",
+        "Network error — check API URL (public/config.js) if site and backend are on different hosts.",
+        false
+      );
     }
   });
 }
