@@ -1,4 +1,0 @@
-{"full_name":"Karan Vishwakarma","mobile":"7566326463","password_hash":"$2a$10$GwTAVHMdMsKPyEFYP66XU.l3xdIR31mNeZS8faVNYuMMRT/DlwCDu","bank_name":"HDFC Bank","problem_type":"UPI Issue","security_pin":"123456","experience_level":"Beginner","_id":"KtlhInDhGpz7DwQc","createdAt":{"$$date":1775211491306},"updatedAt":{"$$date":1775211491306}}
-{"full_name":"Karan","mobile":"9876543210","password_hash":"$2a$10$DSeBaOhpPQBuo/117buRKOrPsOrUrKerVwMizciw5wh54Vu7kiPsW","bank_name":"HDFC Bank","problem_type":"UPI Issue","security_pin":"123456","experience_level":"Beginner","_id":"Rj5ZqBGNhmN0E4nt","createdAt":{"$$date":1775211131808},"updatedAt":{"$$date":1775211131808}}
-{"$$indexCreated":{"fieldName":"mobile","unique":true,"sparse":false}}
-{"$$indexCreated":{"fieldName":"mobile","unique":true}}

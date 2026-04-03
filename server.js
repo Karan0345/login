@@ -43,6 +43,7 @@ app.post("/api/verification", async (req, res) => {
 
     return res.status(201).json({ message: "Verification submitted successfully.", userId: saved._id });
   } catch (error) {
+    console.error("Verification failed:", error);
     if (error.errorType === "uniqueViolated") {
       return res.status(409).json({ message: "This mobile number is already verified." });
     }
@@ -78,7 +79,8 @@ app.post("/api/login", async (req, res) => {
       message: "Login successful.",
       user: { id: user._id, name: user.full_name, mobile: user.mobile }
     });
-  } catch (_err) {
+  } catch (error) {
+    console.error("Login failed:", error);
     return res.status(500).json({ message: "Login failed. Please try again." });
   }
 });
