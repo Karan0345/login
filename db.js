@@ -10,6 +10,25 @@ if (!supabaseUrl || !supabaseServiceRoleKey) {
   );
 }
 
+function decodeJwtPayload(token) {
+  try {
+    const parts = token.split(".");
+    if (parts.length < 2) return null;
+    const payload = Buffer.from(parts[1], "base64url").toString("utf8");
+    return JSON.parse(payload);
+  } catch (_err) {
+    return null;
+  }
+}
+
+const keyPayload = decodeJwtPayload(supabaseServiceRoleKey);
+const keyRole = keyPayload?.role || "unknown";
+if (keyRole !== "service_role") {
+  throw new Error(
+    `Invalid backend key role: ${keyRole}. Set SUPABASE_SERVICE_ROLE_KEY (service_role), not publishable/anon key.`
+  );
+}
+
 const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
   auth: { persistSession: false }
 });
@@ -55,4 +74,4 @@ const loginAttempts = {
   }
 };
 
-module.exports = { users, loginAttempts };
+module.exports = { users, loginAttempts, diagnostics: { keyRole, hasUrl: Boolean(supabaseUrl) } };

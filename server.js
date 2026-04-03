@@ -105,10 +105,19 @@ app.get("/", (_req, res) => {
 app.get("/api/health", async (_req, res) => {
   try {
     await db.users.findOne({ mobile: "__health_check_no_user__" });
-    return res.json({ ok: true, supabase: "reachable" });
+    return res.json({
+      ok: true,
+      supabase: "reachable",
+      config: db.diagnostics || null
+    });
   } catch (error) {
     console.error("Health check failed:", error);
-    return res.status(500).json({ ok: false, message: "Supabase check failed", detail: String(error?.message || error) });
+    return res.status(500).json({
+      ok: false,
+      message: "Supabase check failed",
+      detail: String(error?.message || error),
+      config: db.diagnostics || null
+    });
   }
 });
 
