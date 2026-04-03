@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spro Deal Login</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="card">
+      <div class="logo-wrap">
+        <div class="logo-badge">Spro Deal</div>
+      </div>
+
+      <h2>Welcome to Spro Deal Customer Service</h2>
+      <p class="subtitle">Please complete your verification</p>
+
+      <form id="loginForm">
+        <div class="input-wrap">
+          <input type="tel" id="loginMobile" placeholder="Mobile Number" maxlength="10" required />
+        </div>
+
+        <div class="input-wrap">
+          <div class="password-field">
+            <input type="password" id="loginPassword" placeholder="Enter Password" required />
+            <button type="button" id="toggleLoginPassword">👁</button>
+          </div>
+        </div>
+
+        <button class="btn" type="submit">SIGN IN</button>
+        <div id="loginStatus" class="status"></div>
+      </form>
+
+      <div class="link-box">
+        <a href="verification.html">New user? Complete verification first</a>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

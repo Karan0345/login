@@ -1,0 +1,14 @@
+{
+  "name": "spro-deal-auth-app",
+  "version": "1.0.0",
+  "description": "Spro Deal verification and login app with SQLite",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "nedb-promises": "^6.2.3"
+  }
+}

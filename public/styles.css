@@ -1,0 +1,148 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #6fbd2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.card {
+  width: min(420px, 100%);
+  background: #f7f7f7;
+  border-radius: 24px;
+  padding: 28px;
+}
+
+.header-box {
+  background: #77c82f;
+  border-radius: 14px;
+  padding: 24px 20px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.header-box h1 {
+  margin: 0;
+  font-size: 42px;
+  line-height: 1.1;
+}
+
+.header-box p {
+  margin: 10px 0 0;
+  font-size: 17px;
+}
+
+h2 {
+  text-align: center;
+  margin: 0 0 18px;
+  font-size: 35px;
+}
+
+.logo-wrap {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.logo-wrap img {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.logo-badge {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: #77c82f;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
+  line-height: 1.1;
+  padding: 12px;
+}
+
+.subtitle {
+  text-align: center;
+  margin: 0 0 16px;
+  color: #555;
+}
+
+.input-wrap {
+  margin-bottom: 14px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #d7d7d7;
+  border-radius: 12px;
+  font-size: 16px;
+  background: #fff;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-field button {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.btn {
+  width: 100%;
+  border: none;
+  background: #a9bbc4;
+  color: #111;
+  border-radius: 14px;
+  padding: 14px 10px;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.status {
+  margin-top: 12px;
+  text-align: center;
+  min-height: 22px;
+  font-size: 14px;
+}
+
+.success {
+  color: #0c7b24;
+}
+
+.error {
+  color: #b11717;
+}
+
+.link-box {
+  text-align: center;
+  margin-top: 14px;
+}
+
+.link-box a {
+  color: #134a89;
+  text-decoration: none;
+  font-weight: 600;
+}
